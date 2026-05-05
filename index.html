@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>XV Años · Daviana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0e0e0d;
+    --white: #fafaf8;
+    --gold: #c9a84c;
+    --gold-light: #e8d48a;
+    --gray: #888680;
+    --gray-light: #e2e0db;
+    --surface: #f5f4f1;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; padding: 2.5rem 1rem; min-height: 100vh; }
+  .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+  /* ── CARD ── */
+  .card {
+    width: 100%;
+    max-width: 480px;
+    background: #fff;
+    border: 1px solid var(--gray-light);
+  }
+
+  /* ── HEADER ── */
+  .inv-header {
+    background: var(--black);
+    padding: 4rem 2.5rem 3.5rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .corner { position: absolute; width: 28px; height: 28px; }
+  .corner svg { width: 100%; height: 100%; }
+  .c-tl { top: 16px; left: 16px; }
+  .c-tr { top: 16px; right: 16px; transform: scaleX(-1); }
+  .c-bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
+  .c-br { bottom: 16px; right: 16px; transform: scale(-1); }
+
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .inv-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 14vw, 72px);
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .gold-rule {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.5rem auto;
+  }
+
+  .inv-xv {
+    font-size: 9px;
+    letter-spacing: 0.55em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* ── BODY ── */
+  .inv-body {
+    padding: 2.5rem 2.5rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  .inv-family {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .inv-family strong { font-weight: 500; color: #333230; }
+
+  .inv-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #555;
+    line-height: 1.85;
+    margin-top: 1.25rem;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── DETAILS ── */
+  .inv-details {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  .det-sep { background: var(--gray-light); }
+
+  .det-block { padding: 1.75rem 1.25rem; text-align: center; }
+
+  .det-label {
+    font-size: 8px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: #aaa;
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+
+  .det-main {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--black);
+    display: block;
+    line-height: 1.3;
+  }
+
+  .det-sub {
+    font-size: 11px;
+    color: #aaa;
+    display: block;
+    margin-top: 0.3rem;
+    font-weight: 300;
+  }
+
+  /* ── RSVP ── */
+  .inv-rsvp { padding: 2rem 2.5rem 2.25rem; border-bottom: 1px solid var(--gray-light); }
+
+  .rsvp-label {
+    font-size: 8px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: #aaa;
+    text-align: center;
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  input[type=text], input[type=tel], input[type=password] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--gray-light);
+    background: var(--surface);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--black);
+    outline: none;
+    border-radius: 0;
+    transition: border-color 0.2s;
+    margin-bottom: 0.65rem;
+    display: block;
+  }
+
+  input:focus { border-color: var(--gold); }
+  input::placeholder { color: #ccc; }
+
+  .phone-hint {
+    font-size: 11px;
+    color: #bbb;
+    font-weight: 300;
+    margin-bottom: 0.65rem;
+    margin-top: -0.3rem;
+    display: block;
+  }
+
+  .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.25rem; }
+
+  .btn-primary {
+    padding: 0.8rem;
+    background: var(--black);
+    color: var(--white);
+    border: 1px solid var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #2a2a28; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-secondary {
+    padding: 0.8rem;
+    background: transparent;
+    color: var(--gray);
+    border: 1px solid var(--gray-light);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 0;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: #bbb; color: #555; }
+  .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .err { color: #b84040; font-size: 11px; text-align: center; margin-top: 0.5rem; display: none; }
+  .loading-msg { font-size: 12px; color: var(--gray); text-align: center; margin-top: 0.75rem; display: none; font-style: italic; }
+
+  /* ── FOOTER ── */
+  .inv-footer {
+    padding: 1.25rem 2.5rem;
+    text-align: center;
+    background: #fafaf8;
+  }
+  .inv-footer p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #aaa;
+  }
+
+  /* ── ADMIN LINK ── */
+  .admin-trigger {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+  .admin-trigger button {
+    font-size: 10px;
+    color: var(--gold);
+    background: none;
+    border: none;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+  }
+  .admin-trigger button:hover { text-decoration: underline; }
+
+  /* ── THANK YOU ── */
+  .thanks-card {
+    width: 100%;
+    max-width: 480px;
+    background: #fff;
+    border: 1px solid var(--gray-light);
+    padding: 4rem 3rem;
+    text-align: center;
+  }
+
+  .thanks-ring {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    font-size: 20px;
+  }
+  .thanks-ring.yes { border: 1px solid var(--gold); color: var(--gold); }
+  .thanks-ring.no  { border: 1px solid var(--gray-light); color: var(--gray); }
+
+  .thanks-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--black);
+    margin-bottom: 0.75rem;
+  }
+
+  .thanks-msg {
+    font-size: 13px;
+    color: var(--gray);
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 280px;
+    margin: 0 auto 0.5rem;
+  }
+
+  .wa-notice {
+    font-size: 11px;
+    color: #4caf50;
+    margin: 1rem auto;
+    max-width: 280px;
+    font-weight: 300;
+  }
+
+  .thanks-detail {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #bbb;
+    margin: 1.5rem 0 2rem;
+  }
+
+  /* ── ADMIN LOGIN ── */
+  .login-card {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    border: 1px solid var(--gray-light);
+    padding: 3rem 2.5rem;
+    text-align: center;
+  }
+
+  .login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--black);
+    margin-bottom: 0.4rem;
+  }
+
+  .login-sub { font-size: 12px; color: #aaa; font-weight: 300; margin-bottom: 2rem; }
+
+  /* ── ADMIN PANEL ── */
+  .panel-card {
+    width: 100%;
+    max-width: 560px;
+    background: #fff;
+    border: 1px solid var(--gray-light);
+    overflow: hidden;
+  }
+
+  .panel-header {
+    background: var(--black);
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .panel-title {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .btn-panel-back {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: #666;
+    background: none;
+    border: 1px solid #333;
+    padding: 0.35rem 0.85rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 0;
+    transition: all 0.2s;
+  }
+  .btn-panel-back:hover { border-color: var(--gold); color: var(--gold); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  .stat-cell {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-right: 1px solid var(--gray-light);
+  }
+  .stat-cell:last-child { border-right: none; }
+
+  .stat-n {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 400;
+    display: block;
+    line-height: 1;
+    color: var(--black);
+  }
+  .stat-n.gold { color: var(--gold); }
+  .stat-n.muted { color: #ccc; }
+
+  .stat-lbl {
+    font-size: 8px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #aaa;
+    display: block;
+    margin-top: 0.4rem;
+  }
+
+  .guest-list { padding: 1.5rem 2rem 2rem; }
+
+  .section-title {
+    font-size: 8px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #aaa;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--gray-light);
+    margin-bottom: 0.25rem;
+  }
+
+  .g-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f5f4f1;
+  }
+  .g-row:last-child { border-bottom: none; }
+
+  .g-name { font-size: 14px; color: #333; }
+  .g-phone { font-size: 11px; color: #aaa; font-weight: 300; }
+
+  .badge {
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    font-weight: 400;
+  }
+  .badge.yes { background: var(--black); color: var(--white); }
+  .badge.no  { background: var(--surface); color: var(--gray); }
+
+  .empty-note {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #ccc;
+    padding: 1.25rem 0;
+    text-align: center;
+  }
+
+  .refresh-btn {
+    display: block;
+    margin: 1.5rem auto 0;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: none;
+    border: 1px solid var(--gold);
+    padding: 0.5rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    border-radius: 0;
+    transition: all 0.2s;
+  }
+  .refresh-btn:hover { background: var(--gold); color: var(--black); }
+
+  .hint-pass { font-size: 11px; color: #ccc; margin-top: 1rem; font-weight: 300; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .page.active > * { animation: fadeUp 0.5s ease both; }
+  .page.active > *:nth-child(2) { animation-delay: 0.08s; }
+</style>
+</head>
+<body>
+
+<!-- ══ INVITACIÓN ══ -->
+<div id="p-invite" class="page active">
+  <div class="card">
+    <div class="inv-header">
+      <div class="corner c-tl"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/><path d="M6 22V6h16" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/><path d="M6 22V6h16" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/></svg></div>
+      <p class="eyebrow">Quinceañera</p>
+      <h1 class="inv-name">Daviana</h1>
+      <div class="gold-rule"></div>
+      <p class="inv-xv">XV · Años</p>
+    </div>
+
+    <div class="inv-body">
+      <p class="inv-family">La familia <strong>García</strong> tiene el honor de invitarte</p>
+      <p class="inv-quote">a celebrar este momento único junto a nosotros, en una noche llena de amor y recuerdos para siempre.</p>
+    </div>
+
+    <div class="inv-details">
+      <div class="det-block">
+        <span class="det-label">Fecha</span>
+        <span class="det-main">Sábado<br>21 de Junio</span>
+        <span class="det-sub">2025 · 7:00 PM</span>
+      </div>
+      <div class="det-sep"></div>
+      <div class="det-block">
+        <span class="det-label">Lugar</span>
+        <span class="det-main">Salón<br>Imperial</span>
+        <span class="det-sub">Ver ubicación ↓</span>
+      </div>
+    </div>
+
+    <div class="inv-rsvp">
+      <span class="rsvp-label">Confirma tu asistencia</span>
+      <input type="text" id="inp-name" placeholder="Tu nombre completo" />
+      <input type="tel" id="inp-phone" placeholder="Tu WhatsApp (+18091234567)" />
+      <span class="phone-hint">Incluye el código de país para recibir la ubicación por WhatsApp</span>
+      <div class="btn-row">
+        <button class="btn-primary" id="btn-yes" onclick="rsvp(true)">Asistiré</button>
+        <button class="btn-secondary" id="btn-no" onclick="rsvp(false)">No podré ir</button>
+      </div>
+      <div class="err" id="err-msg">Por favor completa tu nombre.</div>
+      <div class="loading-msg" id="loading-msg">Registrando tu respuesta...</div>
+    </div>
+
+    <div class="inv-footer">
+      <p>Te esperamos con todo el amor — Daviana y familia</p>
+    </div>
+  </div>
+
+  <div class="admin-trigger">
+    <button onclick="show('p-login')">Panel del organizador →</button>
+  </div>
+</div>
+
+<!-- ══ GRACIAS ══ -->
+<div id="p-thanks" class="page">
+  <div class="thanks-card">
+    <div class="thanks-ring" id="thanks-ring">✓</div>
+    <h2 class="thanks-title" id="thanks-title">¡Con gusto te esperamos!</h2>
+    <p class="thanks-msg" id="thanks-msg">Tu asistencia ha sido confirmada. Nos llena de alegría contarte entre nuestros invitados.</p>
+    <p class="wa-notice" id="wa-notice"></p>
+    <p class="thanks-detail">21 de Junio, 2025 · Salón Imperial</p>
+    <div class="gold-rule"></div>
+    <button class="btn-secondary" style="margin-top:1.5rem;" onclick="show('p-invite')">← Volver a la invitación</button>
+  </div>
+</div>
+
+<!-- ══ LOGIN ADMIN ══ -->
+<div id="p-login" class="page">
+  <div class="login-card">
+    <p class="login-title">Organizador</p>
+    <p class="login-sub">Ingresa la contraseña para ver la lista de invitados</p>
+    <input type="password" id="inp-pass" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkPass()" />
+    <button class="btn-primary" style="width:100%;margin-bottom:0.5rem;" onclick="checkPass()">Entrar</button>
+    <div class="err" id="pass-err" style="display:none;">Contraseña incorrecta.</div>
+    <p class="hint-pass">Contraseña: <strong>daviana2025</strong></p>
+    <br>
+    <button class="btn-secondary" onclick="show('p-invite')">← Volver</button>
+  </div>
+</div>
+
+<!-- ══ PANEL ADMIN ══ -->
+<div id="p-admin" class="page">
+  <div class="panel-card">
+    <div class="panel-header">
+      <span class="panel-title">Lista de invitados · Daviana XV</span>
+      <button class="btn-panel-back" onclick="show('p-invite')">← Invitación</button>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-cell">
+        <span class="stat-n" id="s-total">—</span>
+        <span class="stat-lbl">Total</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-n gold" id="s-yes">—</span>
+        <span class="stat-lbl">Confirmados</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-n muted" id="s-no">—</span>
+        <span class="stat-lbl">No asisten</span>
+      </div>
+    </div>
+    <div class="guest-list">
+      <p class="section-title">Confirmados</p>
+      <div id="list-yes"><p class="empty-note">Cargando...</p></div>
+      <br>
+      <p class="section-title">No asisten</p>
+      <div id="list-no"><p class="empty-note">Cargando...</p></div>
+      <button class="refresh-btn" onclick="loadGuests()">↻ Actualizar lista</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzQOPhADTgLci-N_5P8lI3QMot60VQ363boowHNcd2-tqxtATMkFd4I09MdEE-o8k_5/exec';
+  const WA_NUMBER = '18298648833';
+  const WA_APIKEY = '4365370';
+  const MAPS_URL  = 'https://maps.app.goo.gl/ECf7arvw4LZfdURH6';
+  const ADMIN_PASS = 'daviana2025';
+
+  function show(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function setButtons(disabled) {
+    document.getElementById('btn-yes').disabled = disabled;
+    document.getElementById('btn-no').disabled  = disabled;
+  }
+
+  async function rsvp(asiste) {
+    const name  = document.getElementById('inp-name').value.trim();
+    const phone = document.getElementById('inp-phone').value.trim();
+    const err   = document.getElementById('err-msg');
+    const loader = document.getElementById('loading-msg');
+
+    if (!name) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    loader.style.display = 'block';
+    setButtons(true);
+
+    try {
+      await fetch(SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: name,
+          asistencia: asiste ? 'Confirmado' : 'No asiste',
+          telefono: phone || '—'
+        })
+      });
+    } catch(e) { console.warn('Sheets error', e); }
+
+    if (asiste && phone) {
+      const msg = encodeURIComponent(
+        `🌸 ¡Hola ${name}! Gracias por confirmar tu asistencia a los XV de Daviana.\n\n📍 Aquí está la ubicación del evento:\n${MAPS_URL}\n\n📅 Sábado 21 de Junio · 7:00 PM\n📌 Salón Imperial\n\n¡Te esperamos con mucho cariño! 💛`
+      );
+      const waUrl = `https://api.callmebot.com/whatsapp.php?phone=${phone.replace(/\D/g,'')}&text=${msg}&apikey=${WA_APIKEY}`;
+      try { await fetch(waUrl, { mode: 'no-cors' }); } catch(e) { console.warn('WA error', e); }
+    }
+
+    loader.style.display = 'none';
+    setButtons(false);
+    document.getElementById('inp-name').value  = '';
+    document.getElementById('inp-phone').value = '';
+
+    const ring = document.getElementById('thanks-ring');
+    const ti   = document.getElementById('thanks-title');
+    const tm   = document.getElementById('thanks-msg');
+    const wn   = document.getElementById('wa-notice');
+
+    if (asiste) {
+      ring.textContent = '✓'; ring.className = 'thanks-ring yes';
+      ti.textContent = '¡Con gusto te esperamos!';
+      tm.textContent = 'Tu asistencia ha sido confirmada. Nos llena de alegría contarte entre nuestros invitados.';
+      wn.textContent = phone ? '📱 Revisa tu WhatsApp — te enviamos la ubicación del evento.' : '';
+    } else {
+      ring.textContent = '○'; ring.className = 'thanks-ring no';
+      ti.textContent = 'Gracias por avisarnos';
+      tm.textContent = 'Lamentamos que no puedas acompañarnos, pero te tenemos presente en nuestro corazón.';
+      wn.textContent = '';
+    }
+    show('p-thanks');
+  }
+
+  function checkPass() {
+    if (document.getElementById('inp-pass').value === ADMIN_PASS) {
+      show('p-admin');
+      loadGuests();
+    } else {
+      document.getElementById('pass-err').style.display = 'block';
+    }
+  }
+
+  async function loadGuests() {
+    document.getElementById('list-yes').innerHTML = '<p class="empty-note">Cargando...</p>';
+    document.getElementById('list-no').innerHTML  = '<p class="empty-note">Cargando...</p>';
+    try {
+      const res  = await fetch(SHEETS_URL);
+      const data = await res.json();
+      const yes  = data.filter(g => g.asistencia === 'Confirmado');
+      const no   = data.filter(g => g.asistencia === 'No asiste');
+
+      document.getElementById('s-total').textContent = data.length;
+      document.getElementById('s-yes').textContent   = yes.length;
+      document.getElementById('s-no').textContent    = no.length;
+
+      const ly = document.getElementById('list-yes');
+      ly.innerHTML = yes.length
+        ? yes.map(g => `<div class="g-row"><div><span class="g-name">${g.nombre}</span><br><span class="g-phone">${g.telefono || ''}</span></div><span class="badge yes">Confirmado</span></div>`).join('')
+        : '<p class="empty-note">Ninguna confirmación aún</p>';
+
+      const ln = document.getElementById('list-no');
+      ln.innerHTML = no.length
+        ? no.map(g => `<div class="g-row"><div><span class="g-name">${g.nombre}</span><br><span class="g-phone">${g.telefono || ''}</span></div><span class="badge no">No asiste</span></div>`).join('')
+        : '<p class="empty-note">Lista vacía</p>';
+    } catch(e) {
+      document.getElementById('list-yes').innerHTML = '<p class="empty-note">Error al cargar. Verifica el Apps Script.</p>';
+      document.getElementById('list-no').innerHTML  = '';
+    }
+  }
+</script>
+</body>
+</html>
