@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>XV Años · Daviana</title>
+<title>XV Años · Daviana & David</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
@@ -488,26 +488,26 @@
       <div class="corner c-bl"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/></svg></div>
       <div class="corner c-br"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/></svg></div>
       <p class="eyebrow">Quinceañera</p>
-      <h1 class="inv-name">Daviana</h1>
+      <h1 class="inv-name">Daviana & David</h1>
       <div class="gold-rule"></div>
       <p class="inv-xv">XV · Años</p>
     </div>
 
     <div class="inv-body">
-      <p class="inv-family">La familia <strong>García</strong> tiene el honor de invitarte</p>
+      <p class="inv-family">La familia <strong>Feliz Aría</strong> tiene el honor de invitarte</p>
       <p class="inv-quote">a celebrar este momento único junto a nosotros, en una noche llena de amor y recuerdos para siempre.</p>
     </div>
 
     <div class="inv-details">
       <div class="det-block">
         <span class="det-label">Fecha</span>
-        <span class="det-main">Sábado<br>21 de Junio</span>
-        <span class="det-sub">2025 · 7:00 PM</span>
+        <span class="det-main">Sábado<br>21 de Julio</span>
+        <span class="det-sub">2026 · 7:00 PM</span>
       </div>
       <div class="det-sep"></div>
       <div class="det-block">
         <span class="det-label">Lugar</span>
-        <span class="det-main">Salón<br>Imperial</span>
+        <span class="det-main">Salón<br>Casa Club<br>CODIA</span>
         <span class="det-sub">Ver ubicación ↓</span>
       </div>
     </div>
@@ -526,7 +526,7 @@
     </div>
 
     <div class="inv-footer">
-      <p>Te esperamos con todo el amor — Daviana y familia</p>
+      <p>Te esperamos con todo el amor — Familia Feliz Arías</p>
     </div>
   </div>
 
@@ -542,7 +542,7 @@
     <h2 class="thanks-title" id="thanks-title">¡Con gusto te esperamos!</h2>
     <p class="thanks-msg" id="thanks-msg">Tu asistencia ha sido confirmada. Nos llena de alegría contarte entre nuestros invitados.</p>
     <p class="wa-notice" id="wa-notice"></p>
-    <p class="thanks-detail">21 de Junio, 2025 · Salón Imperial</p>
+    <p class="thanks-detail">21 de Julio, 2026 · Salón Casa Club CODIA</p>
     <div class="gold-rule"></div>
     <button class="btn-secondary" style="margin-top:1.5rem;" onclick="show('p-invite')">← Volver a la invitación</button>
   </div>
@@ -556,7 +556,6 @@
     <input type="password" id="inp-pass" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkPass()" />
     <button class="btn-primary" style="width:100%;margin-bottom:0.5rem;" onclick="checkPass()">Entrar</button>
     <div class="err" id="pass-err" style="display:none;">Contraseña incorrecta.</div>
-    <p class="hint-pass">Contraseña: <strong>daviana2025</strong></p>
     <br>
     <button class="btn-secondary" onclick="show('p-invite')">← Volver</button>
   </div>
@@ -599,7 +598,7 @@
   const WA_NUMBER = '18298648833';
   const WA_APIKEY = '4365370';
   const MAPS_URL  = 'https://maps.app.goo.gl/ECf7arvw4LZfdURH6';
-  const ADMIN_PASS = 'daviana2025';
+  const ADMIN_PASS = 'davianaydavid2026';
 
   function show(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -638,7 +637,7 @@
 
     if (asiste && phone) {
       const msg = encodeURIComponent(
-        `🌸 ¡Hola ${name}! Gracias por confirmar tu asistencia a los XV de Daviana.\n\n📍 Aquí está la ubicación del evento:\n${MAPS_URL}\n\n📅 Sábado 21 de Junio · 7:00 PM\n📌 Salón Imperial\n\n¡Te esperamos con mucho cariño! 💛`
+        `🌸 ¡Hola ${name}! Gracias por confirmar tu asistencia a los XV de Daviana & David.\n\n📍 Aquí está la ubicación del evento:\n${MAPS_URL}\n\n📅 Sábado 21 de Julio · 7:00 PM\n📌 Salón Casa Club CODIA\n\n¡Te esperamos con mucho cariño! 💛`
       );
       const waUrl = `https://api.callmebot.com/whatsapp.php?phone=${phone.replace(/\D/g,'')}&text=${msg}&apikey=${WA_APIKEY}`;
       try { await fetch(waUrl, { mode: 'no-cors' }); } catch(e) { console.warn('WA error', e); }
@@ -662,7 +661,7 @@
     } else {
       ring.textContent = '○'; ring.className = 'thanks-ring no';
       ti.textContent = 'Gracias por avisarnos';
-      tm.textContent = 'Lamentamos que no puedas acompañarnos, pero te tenemos presente en nuestro corazón.';
+      tm.textContent = 'Lamentamos que no puedas acompañarnos.';
       wn.textContent = '';
     }
     show('p-thanks');
