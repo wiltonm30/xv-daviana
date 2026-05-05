@@ -501,7 +501,7 @@
     <div class="inv-details">
       <div class="det-block">
         <span class="det-label">Fecha</span>
-        <span class="det-main">Sábado<br>21 de Julio</span>
+        <span class="det-main">Sábado<br>18 de Julio</span>
         <span class="det-sub">2026 · 7:00 PM</span>
       </div>
       <div class="det-sep"></div>
@@ -542,7 +542,7 @@
     <h2 class="thanks-title" id="thanks-title">¡Con gusto te esperamos!</h2>
     <p class="thanks-msg" id="thanks-msg">Tu asistencia ha sido confirmada. Nos llena de alegría contarte entre nuestros invitados.</p>
     <p class="wa-notice" id="wa-notice"></p>
-    <p class="thanks-detail">21 de Julio, 2026 · Salón Casa Club CODIA</p>
+    <p class="thanks-detail">18 de Julio, 2026 · Salón Casa Club CODIA</p>
     <div class="gold-rule"></div>
     <button class="btn-secondary" style="margin-top:1.5rem;" onclick="show('p-invite')">← Volver a la invitación</button>
   </div>
@@ -637,7 +637,7 @@
 
     if (asiste && phone) {
       const msg = encodeURIComponent(
-        `🌸 ¡Hola ${name}! Gracias por confirmar tu asistencia a los XV de Daviana & David.\n\n📍 Aquí está la ubicación del evento:\n${MAPS_URL}\n\n📅 Sábado 21 de Julio · 7:00 PM\n📌 Salón Casa Club CODIA\n\n¡Te esperamos con mucho cariño! 💛`
+        `🌸 ¡Hola ${name}! Gracias por confirmar tu asistencia a los XV de Daviana & David.\n\n📍 Aquí está la ubicación del evento:\n${MAPS_URL}\n\n📅 Sábado 18 de Julio · 7:00 PM\n📌 Salón Casa Club CODIA\n\n¡Te esperamos con mucho cariño! 💛`
       );
       const waUrl = `https://api.callmebot.com/whatsapp.php?phone=${phone.replace(/\D/g,'')}&text=${msg}&apikey=${WA_APIKEY}`;
       try { await fetch(waUrl, { mode: 'no-cors' }); } catch(e) { console.warn('WA error', e); }
