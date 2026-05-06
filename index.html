@@ -5,109 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>XV Años · Daviana & David</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --black: #05205a;
-    --white: #fafaf8;
-    --gold: #c9a84c;
+    --navy:       #03102e;
+    --navy-mid:   #071a45;
+    --navy-light: #0d2660;
+    --gold:       #c9a84c;
     --gold-light: #e8d48a;
-    --gray: #888680;
-    --gray-light: #e2e0db;
-    --surface: #f5f4f1;
+    --gold-dim:   #9a7a35;
+    --white:      #fdf8ee;
+    --gray:       #8899bb;
+    --gray-light: #1e3060;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--surface);
-    color: var(--black);
+    background: var(--navy);
+    color: var(--white);
     min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── CANVAS PARTICLES ── */
+  #particles-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
   }
 
   /* ── PAGES ── */
-  .page { display: none; padding: 2.5rem 1rem; min-height: 100vh; }
+  .page { display: none; position: relative; z-index: 1; padding: 2.5rem 1rem; min-height: 100vh; }
   .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
   /* ── CARD ── */
   .card {
     width: 100%;
     max-width: 480px;
-    background: #fff;
-    border: 1px solid var(--gray-light);
+    background: linear-gradient(160deg, rgba(7,26,69,0.97) 0%, rgba(3,16,46,0.99) 100%);
+    border: 1px solid rgba(201,168,76,0.35);
+    box-shadow: 0 0 60px rgba(201,168,76,0.08), 0 0 0 1px rgba(201,168,76,0.05) inset;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);
+    pointer-events: none;
   }
 
   /* ── HEADER ── */
   .inv-header {
-    background: var(--black);
+    background: linear-gradient(180deg, rgba(3,10,30,0.9) 0%, rgba(7,26,69,0.6) 100%);
     padding: 4rem 2.5rem 3.5rem;
     text-align: center;
     position: relative;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
   }
 
-  .corner { position: absolute; width: 28px; height: 28px; }
+  .inv-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .corner { position: absolute; width: 36px; height: 36px; }
   .corner svg { width: 100%; height: 100%; }
-  .c-tl { top: 16px; left: 16px; }
-  .c-tr { top: 16px; right: 16px; transform: scaleX(-1); }
-  .c-bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
-  .c-br { bottom: 16px; right: 16px; transform: scale(-1); }
+  .c-tl { top: 14px; left: 14px; }
+  .c-tr { top: 14px; right: 14px; transform: scaleX(-1); }
+  .c-bl { bottom: 14px; left: 14px; transform: scaleY(-1); }
+  .c-br { bottom: 14px; right: 14px; transform: scale(-1); }
 
   .eyebrow {
     font-size: 9px;
-    letter-spacing: 0.5em;
+    letter-spacing: 0.55em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
+    opacity: 0.9;
   }
 
   .inv-name {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(52px, 14vw, 72px);
-    font-weight: 400;
+    font-size: clamp(34px, 9vw, 52px);
+    font-weight: 300;
     color: var(--white);
-    line-height: 1;
-    letter-spacing: -0.01em;
+    line-height: 1.1;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3), 0 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 0.02em;
   }
 
   .gold-rule {
-    width: 48px;
+    width: 60px;
     height: 1px;
-    background: var(--gold);
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
     margin: 1.5rem auto;
   }
 
   .inv-xv {
     font-size: 9px;
-    letter-spacing: 0.55em;
+    letter-spacing: 0.6em;
     text-transform: uppercase;
-    color: var(--gray);
+    color: var(--gold-dim);
   }
 
   /* ── BODY ── */
   .inv-body {
-    padding: 2.5rem 2.5rem 2rem;
+    padding: 2.25rem 2.5rem 2rem;
     text-align: center;
-    border-bottom: 1px solid var(--gray-light);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
   }
 
   .inv-family {
     font-size: 12px;
     color: var(--gray);
     font-weight: 300;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.3rem;
+    letter-spacing: 0.1em;
   }
 
-  .inv-family strong { font-weight: 500; color: #333230; }
+  .inv-family strong { font-weight: 400; color: rgba(253,248,238,0.85); }
 
   .inv-quote {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 15px;
-    color: #555;
+    font-size: 16px;
+    color: rgba(253,248,238,0.65);
     line-height: 1.85;
     margin-top: 1.25rem;
     max-width: 300px;
@@ -119,374 +154,250 @@
   .inv-details {
     display: grid;
     grid-template-columns: 1fr 1px 1fr;
-    border-bottom: 1px solid var(--gray-light);
+    border-bottom: 1px solid rgba(201,168,76,0.12);
   }
 
-  .det-sep { background: var(--gray-light); }
-
+  .det-sep { background: rgba(201,168,76,0.15); }
   .det-block { padding: 1.75rem 1.25rem; text-align: center; }
 
   .det-label {
     font-size: 8px;
-    letter-spacing: 0.45em;
+    letter-spacing: 0.5em;
     text-transform: uppercase;
-    color: #aaa;
+    color: var(--gold-dim);
     display: block;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.6rem;
   }
 
   .det-main {
     font-family: 'Playfair Display', serif;
     font-size: 17px;
-    color: var(--black);
+    font-weight: 300;
+    color: var(--white);
     display: block;
-    line-height: 1.3;
+    line-height: 1.35;
   }
 
-  .det-sub {
-    font-size: 11px;
-    color: #aaa;
-    display: block;
-    margin-top: 0.3rem;
-    font-weight: 300;
-  }
+  .det-sub { font-size: 11px; color: var(--gray); display: block; margin-top: 0.35rem; font-weight: 300; }
 
   /* ── RSVP ── */
-  .inv-rsvp { padding: 2rem 2.5rem 2.25rem; border-bottom: 1px solid var(--gray-light); }
+  .inv-rsvp { padding: 2rem 2.5rem 2.25rem; border-bottom: 1px solid rgba(201,168,76,0.12); }
 
   .rsvp-label {
     font-size: 8px;
-    letter-spacing: 0.45em;
+    letter-spacing: 0.5em;
     text-transform: uppercase;
-    color: #aaa;
+    color: var(--gold-dim);
     text-align: center;
     display: block;
     margin-bottom: 1.25rem;
   }
 
-  input[type=text], input[type=tel], input[type=password] {
+  input[type=text], input[type=password] {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--gray-light);
-    background: var(--surface);
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(201,168,76,0.25);
+    background: rgba(3,16,46,0.8);
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
     font-weight: 300;
-    color: var(--black);
+    color: var(--white);
     outline: none;
     border-radius: 0;
-    transition: border-color 0.2s;
+    transition: border-color 0.3s, box-shadow 0.3s;
     margin-bottom: 0.65rem;
     display: block;
   }
 
-  input:focus { border-color: var(--gold); }
-  input::placeholder { color: #ccc; }
-
-  .phone-hint {
-    font-size: 11px;
-    color: #bbb;
-    font-weight: 300;
-    margin-bottom: 0.65rem;
-    margin-top: -0.3rem;
-    display: block;
+  input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(201,168,76,0.15);
   }
+  input::placeholder { color: rgba(136,153,187,0.5); }
 
   .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.25rem; }
 
   .btn-primary {
-    padding: 0.8rem;
-    background: var(--black);
-    color: var(--white);
-    border: 1px solid var(--black);
+    padding: 0.85rem;
+    background: linear-gradient(135deg, var(--gold-dim) 0%, var(--gold) 50%, var(--gold-dim) 100%);
+    background-size: 200% 100%;
+    color: var(--navy);
+    border: none;
     font-family: 'DM Sans', sans-serif;
     font-size: 10px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     cursor: pointer;
     border-radius: 0;
-    transition: background 0.2s;
+    font-weight: 500;
+    transition: background-position 0.4s, box-shadow 0.3s;
+    box-shadow: 0 0 20px rgba(201,168,76,0.2);
   }
-  .btn-primary:hover { background: #2a2a28; }
-  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-primary:hover {
+    background-position: right center;
+    box-shadow: 0 0 30px rgba(201,168,76,0.4);
+  }
+  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .btn-secondary {
-    padding: 0.8rem;
+    padding: 0.85rem;
     background: transparent;
     color: var(--gray);
-    border: 1px solid var(--gray-light);
+    border: 1px solid rgba(201,168,76,0.2);
     font-family: 'DM Sans', sans-serif;
     font-size: 10px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     cursor: pointer;
     border-radius: 0;
-    transition: all 0.2s;
+    transition: all 0.3s;
   }
-  .btn-secondary:hover { border-color: #bbb; color: #555; }
-  .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-secondary:hover { border-color: rgba(201,168,76,0.5); color: var(--white); }
+  .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .err { color: #b84040; font-size: 11px; text-align: center; margin-top: 0.5rem; display: none; }
-  .loading-msg { font-size: 12px; color: var(--gray); text-align: center; margin-top: 0.75rem; display: none; font-style: italic; }
+  .err { color: #e07070; font-size: 11px; text-align: center; margin-top: 0.5rem; display: none; }
+  .loading-msg { font-size: 12px; color: var(--gold-dim); text-align: center; margin-top: 0.75rem; display: none; font-style: italic; }
 
   /* ── FOOTER ── */
-  .inv-footer {
-    padding: 1.25rem 2.5rem;
-    text-align: center;
-    background: #fafaf8;
-  }
+  .inv-footer { padding: 1.25rem 2.5rem; text-align: center; }
   .inv-footer p {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: 13px;
-    color: #aaa;
+    color: var(--gold-dim);
+    opacity: 0.8;
   }
 
-  /* ── ADMIN LINK ── */
-  .admin-trigger {
-    margin-top: 1.5rem;
-    text-align: center;
-  }
+  /* ── ADMIN TRIGGER ── */
+  .admin-trigger { margin-top: 1.75rem; text-align: center; }
   .admin-trigger button {
-    font-size: 10px;
-    color: var(--gold);
-    background: none;
-    border: none;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    padding: 0;
+    font-size: 9px; color: rgba(201,168,76,0.4); background: none; border: none;
+    letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; padding: 0; transition: color 0.3s;
   }
-  .admin-trigger button:hover { text-decoration: underline; }
+  .admin-trigger button:hover { color: var(--gold); }
 
-  /* ── THANK YOU ── */
+  /* ── THANKS ── */
   .thanks-card {
-    width: 100%;
-    max-width: 480px;
-    background: #fff;
-    border: 1px solid var(--gray-light);
-    padding: 4rem 3rem;
-    text-align: center;
+    width: 100%; max-width: 480px;
+    background: linear-gradient(160deg, rgba(7,26,69,0.97) 0%, rgba(3,16,46,0.99) 100%);
+    border: 1px solid rgba(201,168,76,0.35);
+    box-shadow: 0 0 60px rgba(201,168,76,0.08);
+    padding: 4rem 3rem; text-align: center;
   }
 
   .thanks-ring {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 2rem;
-    font-size: 20px;
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2rem; font-size: 22px;
   }
-  .thanks-ring.yes { border: 1px solid var(--gold); color: var(--gold); }
-  .thanks-ring.no  { border: 1px solid var(--gray-light); color: var(--gray); }
+  .thanks-ring.yes { border: 1px solid var(--gold); color: var(--gold); box-shadow: 0 0 20px rgba(201,168,76,0.3); }
+  .thanks-ring.no  { border: 1px solid rgba(136,153,187,0.3); color: var(--gray); }
 
-  .thanks-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    color: var(--black);
-    margin-bottom: 0.75rem;
-  }
+  .thanks-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 300; color: var(--white); margin-bottom: 0.75rem; }
 
-  .thanks-msg {
-    font-size: 13px;
-    color: var(--gray);
-    font-weight: 300;
-    line-height: 1.8;
-    max-width: 280px;
-    margin: 0 auto 0.5rem;
-  }
+  .thanks-msg { font-size: 13px; color: var(--gray); font-weight: 300; line-height: 1.8; max-width: 280px; margin: 0 auto 0.5rem; }
 
-  .wa-notice {
-    font-size: 11px;
-    color: #4caf50;
-    margin: 1rem auto;
-    max-width: 280px;
-    font-weight: 300;
-  }
+  .thanks-detail { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-dim); margin: 1.5rem 0 2rem; opacity: 0.7; }
 
-  .thanks-detail {
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #bbb;
-    margin: 1.5rem 0 2rem;
-  }
-
-  /* ── ADMIN LOGIN ── */
+  /* ── LOGIN ── */
   .login-card {
-    width: 100%;
-    max-width: 380px;
-    background: #fff;
-    border: 1px solid var(--gray-light);
-    padding: 3rem 2.5rem;
-    text-align: center;
+    width: 100%; max-width: 380px;
+    background: linear-gradient(160deg, rgba(7,26,69,0.97) 0%, rgba(3,16,46,0.99) 100%);
+    border: 1px solid rgba(201,168,76,0.35);
+    padding: 3rem 2.5rem; text-align: center;
   }
 
-  .login-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    color: var(--black);
-    margin-bottom: 0.4rem;
-  }
+  .login-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 300; color: var(--white); margin-bottom: 0.4rem; }
+  .login-sub { font-size: 12px; color: var(--gray); font-weight: 300; margin-bottom: 2rem; }
 
-  .login-sub { font-size: 12px; color: #aaa; font-weight: 300; margin-bottom: 2rem; }
-
-  /* ── ADMIN PANEL ── */
+  /* ── PANEL ── */
   .panel-card {
-    width: 100%;
-    max-width: 560px;
-    background: #fff;
-    border: 1px solid var(--gray-light);
+    width: 100%; max-width: 560px;
+    background: linear-gradient(160deg, rgba(7,26,69,0.97) 0%, rgba(3,16,46,0.99) 100%);
+    border: 1px solid rgba(201,168,76,0.35);
     overflow: hidden;
   }
 
   .panel-header {
-    background: var(--black);
+    background: rgba(3,10,30,0.8);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
     padding: 1.25rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
   }
 
-  .panel-title {
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
+  .panel-title { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); }
 
   .btn-panel-back {
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: #666;
-    background: none;
-    border: 1px solid #333;
-    padding: 0.35rem 0.85rem;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    text-transform: uppercase;
-    border-radius: 0;
-    transition: all 0.2s;
+    font-size: 9px; letter-spacing: 0.2em; color: var(--gray); background: none;
+    border: 1px solid rgba(201,168,76,0.2); padding: 0.35rem 0.85rem;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; text-transform: uppercase;
+    border-radius: 0; transition: all 0.3s;
   }
   .btn-panel-back:hover { border-color: var(--gold); color: var(--gold); }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-bottom: 1px solid var(--gray-light);
-  }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid rgba(201,168,76,0.12); }
 
-  .stat-cell {
-    padding: 1.5rem 1rem;
-    text-align: center;
-    border-right: 1px solid var(--gray-light);
-  }
+  .stat-cell { padding: 1.5rem 1rem; text-align: center; border-right: 1px solid rgba(201,168,76,0.12); }
   .stat-cell:last-child { border-right: none; }
 
-  .stat-n {
-    font-family: 'Playfair Display', serif;
-    font-size: 38px;
-    font-weight: 400;
-    display: block;
-    line-height: 1;
-    color: var(--black);
-  }
+  .stat-n { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 300; display: block; line-height: 1; color: var(--white); }
   .stat-n.gold { color: var(--gold); }
-  .stat-n.muted { color: #ccc; }
+  .stat-n.muted { color: rgba(136,153,187,0.4); }
 
-  .stat-lbl {
-    font-size: 8px;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: #aaa;
-    display: block;
-    margin-top: 0.4rem;
-  }
+  .stat-lbl { font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-dim); display: block; margin-top: 0.4rem; opacity: 0.7; }
 
   .guest-list { padding: 1.5rem 2rem 2rem; }
 
   .section-title {
-    font-size: 8px;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: #aaa;
-    padding-bottom: 0.65rem;
-    border-bottom: 1px solid var(--gray-light);
-    margin-bottom: 0.25rem;
+    font-size: 8px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
+    padding-bottom: 0.65rem; border-bottom: 1px solid rgba(201,168,76,0.12); margin-bottom: 0.25rem; opacity: 0.7;
   }
 
-  .g-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid #f5f4f1;
-  }
+  .g-row { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
   .g-row:last-child { border-bottom: none; }
+  .g-name { font-size: 14px; color: rgba(253,248,238,0.85); font-weight: 300; }
 
-  .g-name { font-size: 14px; color: #333; }
-  .g-phone { font-size: 11px; color: #aaa; font-weight: 300; }
+  .badge { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.3rem 0.65rem; font-weight: 400; }
+  .badge.yes { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .badge.no  { background: rgba(136,153,187,0.08); color: var(--gray); border: 1px solid rgba(136,153,187,0.15); }
 
-  .badge {
-    font-size: 8px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.65rem;
-    font-weight: 400;
-  }
-  .badge.yes { background: var(--black); color: var(--white); }
-  .badge.no  { background: var(--surface); color: var(--gray); }
-
-  .empty-note {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 14px;
-    color: #ccc;
-    padding: 1.25rem 0;
-    text-align: center;
-  }
+  .empty-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: rgba(136,153,187,0.4); padding: 1.25rem 0; text-align: center; }
 
   .refresh-btn {
-    display: block;
-    margin: 1.5rem auto 0;
-    font-size: 9px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    background: none;
-    border: 1px solid var(--gold);
-    padding: 0.5rem 1.25rem;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    border-radius: 0;
-    transition: all 0.2s;
+    display: block; margin: 1.5rem auto 0; font-size: 9px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); background: none;
+    border: 1px solid rgba(201,168,76,0.3); padding: 0.5rem 1.25rem;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; border-radius: 0; transition: all 0.3s;
   }
-  .refresh-btn:hover { background: var(--gold); color: var(--black); }
-
-  .hint-pass { font-size: 11px; color: #ccc; margin-top: 1rem; font-weight: 300; }
+  .refresh-btn:hover { background: rgba(201,168,76,0.08); box-shadow: 0 0 12px rgba(201,168,76,0.2); }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .page.active > * { animation: fadeUp 0.5s ease both; }
-  .page.active > *:nth-child(2) { animation-delay: 0.08s; }
+  .page.active > * { animation: fadeUp 0.6s ease both; }
+  .page.active > *:nth-child(2) { animation-delay: 0.1s; }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.1; }
+  }
 </style>
 </head>
 <body>
+
+<canvas id="particles-canvas"></canvas>
 
 <!-- ══ INVITACIÓN ══ -->
 <div id="p-invite" class="page active">
   <div class="card">
     <div class="inv-header">
-      <div class="corner c-tl"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/><path d="M6 22V6h16" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/></svg></div>
-      <div class="corner c-tr"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/><path d="M6 22V6h16" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/></svg></div>
-      <div class="corner c-bl"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/></svg></div>
-      <div class="corner c-br"><svg viewBox="0 0 28 28" fill="none"><path d="M2 26V2h24" stroke="#c9a84c" stroke-width="1"/></svg></div>
+      <div class="corner c-tl"><svg viewBox="0 0 36 36" fill="none"><path d="M2 34V2h32" stroke="#c9a84c" stroke-width="1"/><path d="M7 28V7h21" stroke="#c9a84c" stroke-width="0.4" opacity="0.5"/><circle cx="2" cy="2" r="1.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+      <div class="corner c-tr"><svg viewBox="0 0 36 36" fill="none"><path d="M2 34V2h32" stroke="#c9a84c" stroke-width="1"/><path d="M7 28V7h21" stroke="#c9a84c" stroke-width="0.4" opacity="0.5"/><circle cx="2" cy="2" r="1.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+      <div class="corner c-bl"><svg viewBox="0 0 36 36" fill="none"><path d="M2 34V2h32" stroke="#c9a84c" stroke-width="1"/><circle cx="2" cy="34" r="1.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+      <div class="corner c-br"><svg viewBox="0 0 36 36" fill="none"><path d="M2 34V2h32" stroke="#c9a84c" stroke-width="1"/><circle cx="2" cy="34" r="1.5" fill="#c9a84c" opacity="0.6"/></svg></div>
       <p class="eyebrow">Quinceañera</p>
       <h1 class="inv-name">Daviana & David</h1>
       <div class="gold-rule"></div>
@@ -494,7 +405,7 @@
     </div>
 
     <div class="inv-body">
-      <p class="inv-family">La familia <strong>Feliz Aría</strong> tiene el honor de invitarte</p>
+      <p class="inv-family">La familia <strong>Feliz Arías</strong> tiene el honor de invitarte</p>
       <p class="inv-quote">a celebrar este momento único junto a nosotros, en una noche llena de amor y recuerdos para siempre.</p>
     </div>
 
@@ -508,20 +419,18 @@
       <div class="det-block">
         <span class="det-label">Lugar</span>
         <span class="det-main">Salón<br>Casa Club<br>CODIA</span>
-       <a href="https://maps.app.goo.gl/ECf7arvw4LZfdURH6" target="_blank" class="det-sub" style="color:#c9a84c;text-decoration:none;">Ver ubicación →</a>
+        <a href="https://maps.app.goo.gl/ECf7arvw4LZfdURH6" target="_blank" class="det-sub" style="color:#c9a84c;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1">Ver ubicación →</a>
       </div>
     </div>
 
     <div class="inv-rsvp">
       <span class="rsvp-label">Confirma tu asistencia</span>
       <input type="text" id="inp-name" placeholder="Tu nombre completo" />
-      <input type="tel" id="inp-phone" placeholder="Tu WhatsApp (+18091234567)" />
-      <span class="phone-hint">Incluye el código de país para recibir la ubicación por WhatsApp</span>
       <div class="btn-row">
         <button class="btn-primary" id="btn-yes" onclick="rsvp(true)">Asistiré</button>
         <button class="btn-secondary" id="btn-no" onclick="rsvp(false)">No podré ir</button>
       </div>
-      <div class="err" id="err-msg">Por favor completa tu nombre.</div>
+      <div class="err" id="err-msg">Por favor escribe tu nombre.</div>
       <div class="loading-msg" id="loading-msg">Registrando tu respuesta...</div>
     </div>
 
@@ -541,14 +450,13 @@
     <div class="thanks-ring" id="thanks-ring">✓</div>
     <h2 class="thanks-title" id="thanks-title">¡Con gusto te esperamos!</h2>
     <p class="thanks-msg" id="thanks-msg">Tu asistencia ha sido confirmada. Nos llena de alegría contarte entre nuestros invitados.</p>
-    <p class="wa-notice" id="wa-notice"></p>
     <p class="thanks-detail">18 de Julio, 2026 · Salón Casa Club CODIA</p>
     <div class="gold-rule"></div>
     <button class="btn-secondary" style="margin-top:1.5rem;" onclick="show('p-invite')">← Volver a la invitación</button>
   </div>
 </div>
 
-<!-- ══ LOGIN ADMIN ══ -->
+<!-- ══ LOGIN ══ -->
 <div id="p-login" class="page">
   <div class="login-card">
     <p class="login-title">Organizador</p>
@@ -561,7 +469,7 @@
   </div>
 </div>
 
-<!-- ══ PANEL ADMIN ══ -->
+<!-- ══ PANEL ══ -->
 <div id="p-admin" class="page">
   <div class="panel-card">
     <div class="panel-header">
@@ -569,18 +477,9 @@
       <button class="btn-panel-back" onclick="show('p-invite')">← Invitación</button>
     </div>
     <div class="stats-grid">
-      <div class="stat-cell">
-        <span class="stat-n" id="s-total">—</span>
-        <span class="stat-lbl">Total</span>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-n gold" id="s-yes">—</span>
-        <span class="stat-lbl">Confirmados</span>
-      </div>
-      <div class="stat-cell">
-        <span class="stat-n muted" id="s-no">—</span>
-        <span class="stat-lbl">No asisten</span>
-      </div>
+      <div class="stat-cell"><span class="stat-n" id="s-total">—</span><span class="stat-lbl">Total</span></div>
+      <div class="stat-cell"><span class="stat-n gold" id="s-yes">—</span><span class="stat-lbl">Confirmados</span></div>
+      <div class="stat-cell"><span class="stat-n muted" id="s-no">—</span><span class="stat-lbl">No asisten</span></div>
     </div>
     <div class="guest-list">
       <p class="section-title">Confirmados</p>
@@ -594,115 +493,227 @@
 </div>
 
 <script>
-  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxKI5Tgp8NXb8TDSQ13bId0zMCs5G-ZBPOoXk5ce_Th0lTg8oa9pkXwj0s7MAnH6z_cKg/exec';
-  const WA_NUMBER = '18298648833';
-  const WA_APIKEY = '4365370';
-  const MAPS_URL  = 'https://maps.app.goo.gl/ECf7arvw4LZfdURH6';
-  const ADMIN_PASS = 'davianaydavid2026';
+// ── PARTICLES ──
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [], stars = [];
 
-  function show(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    window.scrollTo(0, 0);
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Floating glitter particles
+class Particle {
+  constructor() { this.reset(true); }
+  reset(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 10;
+    this.size = Math.random() * 2.5 + 0.5;
+    this.speedY = -(Math.random() * 0.4 + 0.1);
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.7 + 0.3;
+    this.twinkleSpeed = Math.random() * 0.02 + 0.005;
+    this.twinkleOffset = Math.random() * Math.PI * 2;
+    this.gold = Math.random() > 0.3;
+    this.shape = Math.random() > 0.6 ? 'star' : 'circle';
   }
-
-  function setButtons(disabled) {
-    document.getElementById('btn-yes').disabled = disabled;
-    document.getElementById('btn-no').disabled  = disabled;
+  update(t) {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.currentOpacity = this.opacity * (0.5 + 0.5 * Math.sin(t * this.twinkleSpeed + this.twinkleOffset));
+    if (this.y < -10) this.reset(false);
   }
-
-  async function rsvp(asiste) {
-    const name  = document.getElementById('inp-name').value.trim();
-    const phone = document.getElementById('inp-phone').value.trim();
-    const err   = document.getElementById('err-msg');
-    const loader = document.getElementById('loading-msg');
-
-    if (!name) { err.style.display = 'block'; return; }
-    err.style.display = 'none';
-    loader.style.display = 'block';
-    setButtons(true);
-
-    try {
-      await fetch(SHEETS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nombre: name,
-          asistencia: asiste ? 'Confirmado' : 'No asiste',
-          telefono: phone || '—'
-        })
-      });
-    } catch(e) { console.warn('Sheets error', e); }
-
-    if (asiste && phone) {
-      const msg = encodeURIComponent(
-        `🌸 ¡Hola ${name}! Gracias por confirmar tu asistencia a los XV de Daviana & David.\n\n📍 Aquí está la ubicación del evento:\n${MAPS_URL}\n\n📅 Sábado 18 de Julio · 7:00 PM\n📌 Salón Casa Club CODIA\n\n¡Te esperamos con mucho cariño! 💛`
-      );
-      const waUrl = `https://api.callmebot.com/whatsapp.php?phone=${phone.replace(/\D/g,'')}&text=${msg}&apikey=${WA_APIKEY}`;
-      try { await fetch(waUrl, { mode: 'no-cors' }); } catch(e) { console.warn('WA error', e); }
-    }
-
-    loader.style.display = 'none';
-    setButtons(false);
-    document.getElementById('inp-name').value  = '';
-    document.getElementById('inp-phone').value = '';
-
-    const ring = document.getElementById('thanks-ring');
-    const ti   = document.getElementById('thanks-title');
-    const tm   = document.getElementById('thanks-msg');
-    const wn   = document.getElementById('wa-notice');
-
-    if (asiste) {
-      ring.textContent = '✓'; ring.className = 'thanks-ring yes';
-      ti.textContent = '¡Con gusto te esperamos!';
-      tm.textContent = 'Tu asistencia ha sido confirmada. Nos llena de alegría contarte entre nuestros invitados.';
-      wn.textContent = phone ? '📱 Revisa tu WhatsApp — te enviamos la ubicación del evento.' : '';
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.currentOpacity;
+    if (this.gold) {
+      ctx.fillStyle = `rgba(201,168,76,1)`;
+      ctx.shadowColor = 'rgba(201,168,76,0.8)';
     } else {
-      ring.textContent = '○'; ring.className = 'thanks-ring no';
-      ti.textContent = 'Gracias por avisarnos';
-      tm.textContent = 'Lamentamos que no puedas acompañarnos.';
-      wn.textContent = '';
+      ctx.fillStyle = `rgba(232,212,138,1)`;
+      ctx.shadowColor = 'rgba(232,212,138,0.6)';
     }
-    show('p-thanks');
-  }
-
-  function checkPass() {
-    if (document.getElementById('inp-pass').value === ADMIN_PASS) {
-      show('p-admin');
-      loadGuests();
+    ctx.shadowBlur = this.size * 3;
+    if (this.shape === 'star') {
+      drawStar(ctx, this.x, this.y, 4, this.size, this.size * 0.4);
     } else {
-      document.getElementById('pass-err').style.display = 'block';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+}
+
+// Twinkling background stars
+class Star {
+  constructor() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.size = Math.random() * 1.2 + 0.2;
+    this.baseOpacity = Math.random() * 0.5 + 0.1;
+    this.twinkleSpeed = Math.random() * 0.015 + 0.003;
+    this.twinkleOffset = Math.random() * Math.PI * 2;
+    this.isGold = Math.random() > 0.7;
+    // Random "flash" timing
+    this.flashChance = Math.random() * 0.003;
+    this.flashing = false;
+    this.flashOpacity = 0;
+  }
+  update(t) {
+    this.currentOpacity = this.baseOpacity * (0.4 + 0.6 * Math.sin(t * this.twinkleSpeed + this.twinkleOffset));
+    // Random flash
+    if (!this.flashing && Math.random() < this.flashChance) {
+      this.flashing = true;
+      this.flashOpacity = 1;
+    }
+    if (this.flashing) {
+      this.flashOpacity -= 0.04;
+      if (this.flashOpacity <= 0) { this.flashing = false; }
     }
   }
-
-  async function loadGuests() {
-    document.getElementById('list-yes').innerHTML = '<p class="empty-note">Cargando...</p>';
-    document.getElementById('list-no').innerHTML  = '<p class="empty-note">Cargando...</p>';
-    try {
-      const res  = await fetch(SHEETS_URL);
-      const data = await res.json();
-      const yes  = data.filter(g => g.asistencia === 'Confirmado');
-      const no   = data.filter(g => g.asistencia === 'No asiste');
-
-      document.getElementById('s-total').textContent = data.length;
-      document.getElementById('s-yes').textContent   = yes.length;
-      document.getElementById('s-no').textContent    = no.length;
-
-      const ly = document.getElementById('list-yes');
-      ly.innerHTML = yes.length
-        ? yes.map(g => `<div class="g-row"><div><span class="g-name">${g.nombre}</span><br><span class="g-phone">${g.telefono || ''}</span></div><span class="badge yes">Confirmado</span></div>`).join('')
-        : '<p class="empty-note">Ninguna confirmación aún</p>';
-
-      const ln = document.getElementById('list-no');
-      ln.innerHTML = no.length
-        ? no.map(g => `<div class="g-row"><div><span class="g-name">${g.nombre}</span><br><span class="g-phone">${g.telefono || ''}</span></div><span class="badge no">No asiste</span></div>`).join('')
-        : '<p class="empty-note">Lista vacía</p>';
-    } catch(e) {
-      document.getElementById('list-yes').innerHTML = '<p class="empty-note">Error al cargar. Verifica el Apps Script.</p>';
-      document.getElementById('list-no').innerHTML  = '';
+  draw() {
+    const op = this.flashing ? Math.max(this.currentOpacity, this.flashOpacity) : this.currentOpacity;
+    ctx.save();
+    ctx.globalAlpha = op;
+    if (this.isGold) {
+      ctx.fillStyle = 'rgba(201,168,76,1)';
+      ctx.shadowColor = this.flashing ? 'rgba(201,168,76,1)' : 'rgba(201,168,76,0.3)';
+    } else {
+      ctx.fillStyle = 'rgba(180,200,255,1)';
+      ctx.shadowColor = this.flashing ? 'rgba(180,200,255,1)' : 'rgba(180,200,255,0.2)';
     }
+    ctx.shadowBlur = this.flashing ? 12 : 3;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
   }
+}
+
+function drawStar(ctx, cx, cy, spikes, outerR, innerR) {
+  let rot = (Math.PI / 2) * 3;
+  const step = Math.PI / spikes;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy - outerR);
+  for (let i = 0; i < spikes; i++) {
+    ctx.lineTo(cx + Math.cos(rot) * outerR, cy + Math.sin(rot) * outerR);
+    rot += step;
+    ctx.lineTo(cx + Math.cos(rot) * innerR, cy + Math.sin(rot) * innerR);
+    rot += step;
+  }
+  ctx.lineTo(cx, cy - outerR);
+  ctx.closePath();
+  ctx.fill();
+}
+
+// Init
+for (let i = 0; i < 120; i++) particles.push(new Particle());
+for (let i = 0; i < 180; i++) stars.push(new Star());
+
+let t = 0;
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  t++;
+  stars.forEach(s => { s.update(t); s.draw(); });
+  particles.forEach(p => { p.update(t); p.draw(); });
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ── APP LOGIC ──
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxKI5Tgp8NXb8TDSQ13bId0zMCs5G-ZBPOoXk5ce_Th0lTg8oa9pkXwj0s7MAnH6z_cKg/exec';
+const ADMIN_PASS = 'davianaydavid2026';
+
+function show(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function setButtons(disabled) {
+  document.getElementById('btn-yes').disabled = disabled;
+  document.getElementById('btn-no').disabled  = disabled;
+}
+
+async function rsvp(asiste) {
+  const name   = document.getElementById('inp-name').value.trim();
+  const err    = document.getElementById('err-msg');
+  const loader = document.getElementById('loading-msg');
+
+  if (!name) { err.style.display = 'block'; return; }
+  err.style.display = 'none';
+  loader.style.display = 'block';
+  setButtons(true);
+
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre: name, asistencia: asiste ? 'Confirmado' : 'No asiste', telefono: '—' })
+    });
+  } catch(e) { console.warn('Sheets error', e); }
+
+  loader.style.display = 'none';
+  setButtons(false);
+  document.getElementById('inp-name').value = '';
+
+  const ring = document.getElementById('thanks-ring');
+  const ti   = document.getElementById('thanks-title');
+  const tm   = document.getElementById('thanks-msg');
+
+  if (asiste) {
+    ring.textContent = '✦'; ring.className = 'thanks-ring yes';
+    ti.textContent = '¡Con gusto te esperamos!';
+    tm.textContent = 'Tu asistencia ha sido confirmada. Nos llena de alegría contarte entre nuestros invitados.';
+  } else {
+    ring.textContent = '○'; ring.className = 'thanks-ring no';
+    ti.textContent = 'Gracias por avisarnos';
+    tm.textContent = 'Lamentamos que no puedas acompañarnos, pero te tenemos presente en nuestro corazón.';
+  }
+  show('p-thanks');
+}
+
+function checkPass() {
+  if (document.getElementById('inp-pass').value === ADMIN_PASS) {
+    show('p-admin');
+    loadGuests();
+  } else {
+    document.getElementById('pass-err').style.display = 'block';
+  }
+}
+
+async function loadGuests() {
+  document.getElementById('list-yes').innerHTML = '<p class="empty-note">Cargando...</p>';
+  document.getElementById('list-no').innerHTML  = '<p class="empty-note">Cargando...</p>';
+  try {
+    const res  = await fetch(SHEETS_URL);
+    const data = await res.json();
+    const yes  = data.filter(g => g.asistencia === 'Confirmado');
+    const no   = data.filter(g => g.asistencia === 'No asiste');
+
+    document.getElementById('s-total').textContent = data.length;
+    document.getElementById('s-yes').textContent   = yes.length;
+    document.getElementById('s-no').textContent    = no.length;
+
+    const ly = document.getElementById('list-yes');
+    ly.innerHTML = yes.length
+      ? yes.map(g => `<div class="g-row"><span class="g-name">${g.nombre}</span><span class="badge yes">Confirmado</span></div>`).join('')
+      : '<p class="empty-note">Ninguna confirmación aún</p>';
+
+    const ln = document.getElementById('list-no');
+    ln.innerHTML = no.length
+      ? no.map(g => `<div class="g-row"><span class="g-name">${g.nombre}</span><span class="badge no">No asiste</span></div>`).join('')
+      : '<p class="empty-note">Lista vacía</p>';
+  } catch(e) {
+    document.getElementById('list-yes').innerHTML = '<p class="empty-note">Error al cargar. Verifica el Apps Script.</p>';
+    document.getElementById('list-no').innerHTML  = '';
+  }
+}
 </script>
 </body>
 </html>
