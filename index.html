@@ -823,6 +823,121 @@ input::placeholder{color:rgba(136,153,187,0.4)}
   }
   .ev-vsep-gem { font-size: 5px; color: rgba(201,168,76,0.45); line-height: 1; margin: 3px 0; }
 
+
+  /* ── DRESS CODE ── */
+  .dress-card {
+    position: relative;
+    background: linear-gradient(160deg, rgba(7,26,69,0.97) 0%, rgba(3,16,46,0.99) 100%);
+    border: 1px solid rgba(201,168,76,0.3);
+    box-shadow: 0 0 60px rgba(201,168,76,0.07);
+    padding: 2rem 1.75rem;
+    overflow: hidden;
+  }
+
+  .dress-card::before {
+    content: '';
+    position: absolute; bottom: -40px; left: -40px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .dress-corner { position: absolute; width: 30px; height: 30px; }
+  .dress-corner svg { width: 100%; height: 100%; }
+  .dc-tl { top: 10px; left: 10px; }
+  .dc-tr { top: 10px; right: 10px; transform: scaleX(-1); }
+  .dc-bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+  .dc-br { bottom: 10px; right: 10px; transform: scale(-1); }
+
+  .dress-top-rule, .dress-bottom-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent);
+    margin-bottom: 1.25rem;
+  }
+  .dress-bottom-rule { margin-top: 1.25rem; margin-bottom: 0; }
+
+  .dress-header {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.6rem; margin-bottom: 0.75rem;
+  }
+  .dress-ornament { color: var(--gold); font-size: 9px; opacity: 0.65; }
+  .dress-eyebrow {
+    font-size: 8px; letter-spacing: 0.55em; text-transform: uppercase;
+    color: var(--gold-dim); font-weight: 300;
+  }
+
+  .dress-main-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 300; color: var(--white);
+    text-align: center; margin-bottom: 1.5rem;
+    text-shadow: 0 0 20px rgba(201,168,76,0.15);
+    letter-spacing: 0.05em;
+  }
+
+  /* Palette */
+  .dress-palette {
+    display: flex; justify-content: center;
+    gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem;
+  }
+  .dress-swatch {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+  }
+  .dress-swatch:hover { transform: scale(1.15); }
+
+  .dress-divider {
+    height: 1px; margin: 0 0 1.25rem;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
+  }
+
+  /* Notice */
+  .dress-notice {
+    display: flex; align-items: flex-start; gap: 0.85rem;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 0.85rem 1rem; margin-bottom: 1rem;
+  }
+  .dress-notice-icon { flex-shrink: 0; margin-top: 2px; }
+  .dress-notice-text { display: flex; flex-direction: column; gap: 0.2rem; }
+  .dress-notice-title {
+    font-size: 11px; font-weight: 500; color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .dress-notice-desc {
+    font-size: 12px; color: rgba(136,153,187,0.85);
+    font-weight: 300; line-height: 1.6;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+  }
+
+  /* Blue swatch */
+  .dress-blue-row {
+    display: flex; align-items: center; gap: 0.85rem;
+    justify-content: center; margin-top: 0.25rem;
+  }
+  .dress-blue-swatch {
+    position: relative; width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+  }
+  .dress-blue-color {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: linear-gradient(135deg, #4a90c4, #1e5f99);
+    border: 2px solid rgba(255,255,255,0.15);
+    filter: saturate(0.6) brightness(0.7);
+  }
+  .dress-blue-lock {
+    position: relative; z-index: 1; font-size: 14px;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+  }
+  .dress-blue-label {
+    font-size: 11px; color: rgba(136,153,187,0.7);
+    font-weight: 300; letter-spacing: 0.08em;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+  }
+
 </style>
 </head>
 <body>
@@ -1043,7 +1158,67 @@ input::placeholder{color:rgba(136,153,187,0.4)}
     </div>
   </div>
 
-  <!-- PHOTO ALBUM -->
+  <!-- DRESS CODE -->
+  <div class="section section-reveal" style="padding-top:0">
+    <div class="dress-card">
+
+      <div class="dress-corner dc-tl"><svg viewBox="0 0 32 32" fill="none"><path d="M2 30V2h28" stroke="#c9a84c" stroke-width="1"/><path d="M6 26V6h18" stroke="#c9a84c" stroke-width="0.4" opacity="0.5"/><circle cx="2" cy="2" r="1.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+      <div class="dress-corner dc-tr"><svg viewBox="0 0 32 32" fill="none"><path d="M2 30V2h28" stroke="#c9a84c" stroke-width="1"/><path d="M6 26V6h18" stroke="#c9a84c" stroke-width="0.4" opacity="0.5"/><circle cx="2" cy="2" r="1.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+      <div class="dress-corner dc-bl"><svg viewBox="0 0 32 32" fill="none"><path d="M2 30V2h28" stroke="#c9a84c" stroke-width="1"/><circle cx="2" cy="30" r="1.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+      <div class="dress-corner dc-br"><svg viewBox="0 0 32 32" fill="none"><path d="M2 30V2h28" stroke="#c9a84c" stroke-width="1"/><circle cx="2" cy="30" r="1.5" fill="#c9a84c" opacity="0.6"/></svg></div>
+
+      <div class="dress-top-rule"></div>
+
+      <div class="dress-header">
+        <span class="dress-ornament">✦</span>
+        <span class="dress-eyebrow">Código de Vestimenta</span>
+        <span class="dress-ornament">✦</span>
+      </div>
+
+      <div class="dress-main-label">Formal · Colores Pasteles</div>
+
+      <!-- Color palette -->
+      <div class="dress-palette">
+        <div class="dress-swatch" style="background:#f9c6d0" title="Rosa pastel"></div>
+        <div class="dress-swatch" style="background:#d4eac8" title="Verde pastel"></div>
+        <div class="dress-swatch" style="background:#fde8c8" title="Melocotón"></div>
+        <div class="dress-swatch" style="background:#e8d5f5" title="Lavanda"></div>
+        <div class="dress-swatch" style="background:#fdf5c8" title="Amarillo pastel"></div>
+        <div class="dress-swatch" style="background:#f5d5e8" title="Malva"></div>
+      </div>
+
+      <div class="dress-divider"></div>
+
+      <!-- Blue restriction notice -->
+      <div class="dress-notice">
+        <div class="dress-notice-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="#c9a84c" stroke-width="1.2"/>
+            <line x1="12" y1="8" x2="12" y2="13" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="12" cy="16.5" r="1" fill="#c9a84c"/>
+          </svg>
+        </div>
+        <div class="dress-notice-text">
+          <span class="dress-notice-title">Nota especial sobre el azul</span>
+          <span class="dress-notice-desc">El color azul está reservado exclusivamente para personas autorizadas por la familia.</span>
+        </div>
+      </div>
+
+      <!-- Blue swatch with lock -->
+      <div class="dress-blue-row">
+        <div class="dress-blue-swatch">
+          <div class="dress-blue-color"></div>
+          <span class="dress-blue-lock">🔒</span>
+        </div>
+        <span class="dress-blue-label">Solo personas autorizadas</span>
+      </div>
+
+      <div class="dress-bottom-rule"></div>
+
+    </div>
+  </div>
+
+    <!-- PHOTO ALBUM -->
   <div class="album-section section-reveal">
     <div class="album-title">
       <p class="section-label">Galería</p>
