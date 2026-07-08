@@ -1148,44 +1148,19 @@ input::placeholder{color:rgba(136,153,187,0.4)}
         <p class="reg-welcome-msg">¡Bienvenida/o,</p>
         <p class="reg-welcome-name" id="reg-display-name"></p>
         <div class="reg-welcome-divider"></div>
-        <p class="reg-welcome-msg">¿Llevarás acompañantes a la celebración?</p>
+        <p class="reg-welcome-msg">Puedes registrar hasta <strong style="color:var(--gold);font-weight:400">1 acompañante</strong></p>
       </div>
 
-      <p style="font-size:9px;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold-dim);opacity:0.8;margin-bottom:0.75rem">Número de acompañantes</p>
-
-      <div class="guest-count-grid">
-        <button class="guest-count-btn" onclick="selectGuests(0)">
-          <span class="gcb-number">0</span>
-          <span class="gcb-label">Solo yo</span>
-        </button>
-        <button class="guest-count-btn" onclick="selectGuests(1)">
-          <span class="gcb-number">1</span>
-          <span class="gcb-label">acompañante</span>
-        </button>
-        <button class="guest-count-btn" onclick="selectGuests(2)">
-          <span class="gcb-number">2</span>
-          <span class="gcb-label">acompañantes</span>
-        </button>
-        <button class="guest-count-btn" onclick="selectGuests(3)">
-          <span class="gcb-number">3</span>
-          <span class="gcb-label">acompañantes</span>
-        </button>
-        <button class="guest-count-btn" onclick="selectGuests(4)">
-          <span class="gcb-number">4</span>
-          <span class="gcb-label">acompañantes</span>
-        </button>
-        <button class="guest-count-btn selected" id="no-guest-btn" onclick="selectGuests(0)" style="display:none"></button>
+      <div class="gnw-divider"></div>
+      <span class="gnw-label">Nombres de tus acompañantes</span>
+      <div class="guest-names-wrap" style="display:block;margin-top:0">
+        <div class="guest-name-field">
+          <span class="guest-num">1</span>
+          <input class="reg-input" type="text" id="guest-1" placeholder="Nombre del acompañante 1" style="margin-bottom:0"/>
+        </div>
       </div>
-
-      <!-- Guest names -->
-      <div class="guest-names-wrap" id="guest-names-wrap" style="display:none">
-        <div class="gnw-divider"></div>
-        <span class="gnw-label">Nombres de tus acompañantes</span>
-        <div id="guest-fields"></div>
-      </div>
-
-      <div class="reg-err" id="reg-err-2">Por favor selecciona cuántos acompañantes llevarás.</div>
-      <button class="reg-btn" onclick="regStep2()" id="reg-open-btn" disabled>Abrir mi invitación ✦</button>
+      <div class="reg-err" id="reg-err-2"></div>
+      <button class="reg-btn" onclick="regStep2()" id="reg-open-btn">Abrir mi invitación ✦</button>
     </div>
 
   </div>
@@ -1310,7 +1285,7 @@ input::placeholder{color:rgba(136,153,187,0.4)}
           </div>
           <span class="ev-label">Hora</span>
           <span class="ev-day">&nbsp;</span>
-          <span class="ev-main" style="font-size:26px;letter-spacing:0.05em">6:00 PM</span>
+          <span class="ev-main" style="font-size:26px;letter-spacing:0.05em">7:00 PM</span>
           <span class="ev-year">en punto</span>
         </div>
 
@@ -1582,17 +1557,16 @@ function selectGuests(n) {
 
 // ── REGISTRATION STEP 2 → OPEN INVITATION ──
 async function regStep2() {
-  if (guestCount < 0) {
-    document.getElementById('reg-err-2').style.display = 'block';
-    return;
-  }
-
-  // Collect guest names
+  // Collect guest names from fields
   guestList = [];
-  for (let i = 1; i <= guestCount; i++) {
-    const val = (document.getElementById(`guest-${i}`)?.value || '').trim();
-    guestList.push(val || `Acompañante ${i}`);
+  for (let i = 1; i <= 1; i++) {
+    const field = document.getElementById(`guest-${i}`);
+    if (field) {
+      const val = field.value.trim();
+      guestList.push(val || `Acompañante ${i}`);
+    }
   }
+  guestCount = guestList.length;
 
   // Save to Sheets using URLSearchParams (works with no-cors)
   const allGuests = guestList.length > 0 ? guestList.join(', ') : 'Solo';
